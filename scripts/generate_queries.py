@@ -1,6 +1,7 @@
 import json
 
 queries = [
+
     # Browsing - casual/broad searches
     {"query": "show me homes in San Diego", "intent": "browsing"},
     {"query": "homes with pools in Irvine", "intent": "browsing"},
@@ -65,7 +66,9 @@ with open('data/processed/sample_queries.json', 'w') as f:
     json.dump(output, f, indent=2)
 
 print(f"Generated {len(queries)} labeled queries")
+
 intent_counts = {}
+
 for q in queries:
     intent_counts[q['intent']] = intent_counts.get(q['intent'], 0) + 1
 for intent, count in intent_counts.items():
