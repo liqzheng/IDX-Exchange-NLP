@@ -1,8 +1,7 @@
 import json
 
 queries = [
-
-    # Browsing - casual/broad searches
+    # Browsing - casual/broad searches (30 queries)
     {"query": "show me homes in San Diego", "intent": "browsing"},
     {"query": "homes with pools in Irvine", "intent": "browsing"},
     {"query": "luxury homes in Beverly Hills", "intent": "browsing"},
@@ -20,8 +19,21 @@ queries = [
     {"query": "homes in quiet neighborhoods", "intent": "browsing"},
     {"query": "properties with mountain views", "intent": "browsing"},
     {"query": "3 bedroom homes in California", "intent": "browsing"},
+    {"query": "what's out there in Pasadena", "intent": "browsing"},
+    {"query": "cute starter homes near San Jose", "intent": "browsing"},
+    {"query": "houses with a home office", "intent": "browsing"},
+    {"query": "modern homes in Long Beach", "intent": "browsing"},
+    {"query": "homes near the beach in San Diego", "intent": "browsing"},
+    {"query": "any fixer-uppers in Riverside", "intent": "browsing"},
+    {"query": "homes with solar panels", "intent": "browsing"},
+    {"query": "what's available in Bakersfield right now", "intent": "browsing"},
+    {"query": "houses with a pool and spa", "intent": "browsing"},
+    {"query": "homes with RV parking", "intent": "browsing"},
+    {"query": "browse listings in Fresno", "intent": "browsing"},
+    {"query": "homes near good hiking trails", "intent": "browsing"},
+    {"query": "condos with a gym in the building", "intent": "browsing"},
 
-    # Researching - comparison, area/market research
+    # Researching - comparison, area/market research (30 queries)
     {"query": "condos near UC Irvine with low HOA", "intent": "researching"},
     {"query": "areas in San Diego with low property taxes", "intent": "researching"},
     {"query": "best school districts in Orange County", "intent": "researching"},
@@ -39,8 +51,21 @@ queries = [
     {"query": "best neighborhoods for families near Sacramento", "intent": "researching"},
     {"query": "HOA fee comparison in Irvine communities", "intent": "researching"},
     {"query": "market trends for condos in Los Angeles", "intent": "researching"},
+    {"query": "is it a good time to buy in San Diego", "intent": "researching"},
+    {"query": "how do prices in Pasadena compare to Glendale", "intent": "researching"},
+    {"query": "which neighborhoods have the best public schools", "intent": "researching"},
+    {"query": "rental yield for investment properties in Fresno", "intent": "researching"},
+    {"query": "price per square foot in Culver City", "intent": "researching"},
+    {"query": "how much have home values gone up in Oakland", "intent": "researching"},
+    {"query": "best areas for first-time homebuyers in California", "intent": "researching"},
+    {"query": "is Riverside a good investment market right now", "intent": "researching"},
+    {"query": "what's the typical days on market in San Jose", "intent": "researching"},
+    {"query": "compare condo HOA fees across Irvine neighborhoods", "intent": "researching"},
+    {"query": "how do earthquake zones affect home insurance in California", "intent": "researching"},
+    {"query": "best cities for remote workers to buy a home", "intent": "researching"},
+    {"query": "which areas have the shortest commute to downtown LA", "intent": "researching"},
 
-    # High-intent inquiry - ready to act, specific criteria
+    # High-intent inquiry - ready to act, specific criteria (31 queries)
     {"query": "move-in ready homes in San Diego under 1.2m", "intent": "high_intent_inquiry"},
     {"query": "homes available this weekend with open houses", "intent": "high_intent_inquiry"},
     {"query": "new listings in Irvine under 900k with seller financing", "intent": "high_intent_inquiry"},
@@ -58,6 +83,20 @@ queries = [
     {"query": "3 bed homes under 700k with pool in Sacramento", "intent": "high_intent_inquiry"},
     {"query": "homes I can make an offer on today", "intent": "high_intent_inquiry"},
     {"query": "move-in ready 4 bedroom homes in San Diego", "intent": "high_intent_inquiry"},
+    {"query": "schedule a showing for homes under 650k in Fresno", "intent": "high_intent_inquiry"},
+    {"query": "homes with no HOA under 750k in Riverside", "intent": "high_intent_inquiry"},
+    {"query": "need a 3 bedroom home closing before December in San Jose", "intent": "high_intent_inquiry"},
+    {"query": "pre-approved for 850k, show me homes in Pasadena", "intent": "high_intent_inquiry"},
+    {"query": "homes I can buy with cash in Bakersfield under 400k", "intent": "high_intent_inquiry"},
+    {"query": "looking to close this month in Long Beach", "intent": "high_intent_inquiry"},
+    {"query": "homes with assumable loans under 600k", "intent": "high_intent_inquiry"},
+    {"query": "open house today in Culver City under 1m", "intent": "high_intent_inquiry"},
+    {"query": "ready to make an offer on a 2 bed condo in Oakland", "intent": "high_intent_inquiry"},
+    {"query": "homes with seller credit toward closing costs", "intent": "high_intent_inquiry"},
+    {"query": "want to buy before the end of the year in Anaheim", "intent": "high_intent_inquiry"},
+    {"query": "3 bed homes with fast closing in Glendale", "intent": "high_intent_inquiry"},
+    {"query": "homes priced to sell quickly in Riverside", "intent": "high_intent_inquiry"},
+    {"query": "first-time homebuyer ready to close in Fresno under 500k", "intent": "high_intent_inquiry"},
 ]
 
 output = {"queries": queries}
@@ -66,11 +105,8 @@ with open('data/processed/sample_queries.json', 'w') as f:
     json.dump(output, f, indent=2)
 
 print(f"Generated {len(queries)} labeled queries")
-
 intent_counts = {}
-
 for q in queries:
     intent_counts[q['intent']] = intent_counts.get(q['intent'], 0) + 1
 for intent, count in intent_counts.items():
     print(f"  {intent}: {count} queries")
-    
