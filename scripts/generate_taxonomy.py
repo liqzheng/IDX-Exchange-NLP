@@ -8,7 +8,8 @@ category_terms = {
         "guest room", "in-law suite", "mudroom", "sunroom", "den", "loft",
         "nursery", "walk-in closet", "powder room", "great room",
         "breakfast nook", "formal dining room", "formal living room", "flex room",
-        "living area", "living spaces", "room for entertaining", "bedroom suite"
+        "living area", "living spaces", "room for entertaining", "bedroom suite",
+        "spacious primary", "spacious living", "main living", "spacious bedrooms"
     ],
     "kitchen_features": [
         "granite countertops", "quartz countertops", "stainless steel appliances",
@@ -18,7 +19,7 @@ category_terms = {
         "butler's pantry", "soft-close cabinets", "tile backsplash",
         "kitchen features", "updated kitchen", "eat-in kitchen",
         "kitchen with island", "walk-in pantry", "kitchen with granite",
-        "modern kitchen", "kitchen countertops"
+        "modern kitchen", "kitchen countertops", "center island", "remodeled kitchen"
     ],
     "interior_features": [
         "hardwood floors", "natural light", "vaulted ceilings", "crown molding",
@@ -28,7 +29,9 @@ category_terms = {
         "ceiling fans", "smart home features", "security system",
         "central air", "dual pane windows", "floor plan", "sq ft",
         "square feet", "upstairs bedrooms", "downstairs bedroom",
-       "abundant natural light", "open concept", "open floor concept"
+        "abundant natural light", "open concept", "open floor concept",
+        "soaking tub", "walk-in shower", "fresh interior paint",
+        "soaring ceilings", "full bathroom", "full bath"
     ],
     "exterior_features": [
         "backyard", "front yard", "private backyard", "covered patio",
@@ -36,7 +39,8 @@ category_terms = {
         "two-car garage", "driveway", "fenced yard", "landscaping",
         "mature trees", "drought-tolerant landscaping", "solar panels",
         "RV parking", "gated entry", "covered porch", "backyard oasis",
-        "outdoor entertaining", "side yard", "private patio"
+        "outdoor entertaining", "side yard", "private patio",
+        "2-car garage", "private balcony"
     ],
     "location_neighborhood": [
         "close to shopping", "near schools", "walking distance", "cul-de-sac",
@@ -46,7 +50,7 @@ category_terms = {
         "near freeway", "near public transit", "near parks", "waterfront",
         "mountain views", "city views", "ocean views", "close to restaurants",
         "near restaurants", "just minutes from", "located near",
-        "close to freeway access"
+        "close to freeway access", "golf course", "direct access", "convenient access"
     ],
     "condition_quality": [
         "move-in ready", "newly renovated", "recently updated", "turnkey",
@@ -55,7 +59,9 @@ category_terms = {
         "exceptional home", "beautifully designed", "single-story",
         "two-story", "ranch style", "contemporary design", "modern finishes",
         "custom-built", "energy efficient", "new roof", "new HVAC",
-        "beautifully appointed", "exceptional opportunity", "rare find"
+        "beautifully appointed", "exceptional opportunity", "rare find",
+        "beautifully maintained", "beautifully updated", "beautifully remodeled",
+        "generously sized"
     ],
     "financial_terms": [
         "HOA fees", "price reduced", "seller financing available", "no HOA",
@@ -74,7 +80,8 @@ category_terms = {
         "community amenities", "clubhouse access", "tennis courts",
         "walking trails", "dog park", "playground", "fitness center",
         "24-hour security", "for both comfort", "blend of comfort",
-        "designed for everyday living"
+        "designed for everyday living", "outdoor living", "private retreat",
+        "outdoor space"
     ]
 }
 

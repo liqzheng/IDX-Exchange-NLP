@@ -33,8 +33,8 @@ bigrams = list(ngrams(tokens, 2))
 freq = Counter(bigrams)
 # Count how many times each bigram (word pair) appears
 
-# Top 200 bigrams become taxonomy seed
-for bigram, count in freq.most_common(200):
+# Top 500 bigrams become taxonomy seed
+for bigram, count in freq.most_common(500):
     print(f"{' '.join(bigram)}: {count}")
     # Get the 200 most frequent bigrams and print each one
     # with its occurrence count, e.g. "hardwood floors: 87"
