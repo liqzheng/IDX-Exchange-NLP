@@ -9,6 +9,20 @@ class EntityExtractor:
             taxonomy = json.load(f)
         self.amenity_terms = [t['term'] for t in taxonomy['terms']]
 
+    NUMBER_WORDS = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6,
+                    'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12}
+    _WORDS = '|'.join(NUMBER_WORDS)
+    # "five bedrooms", "three-bedroom"
+    BED_WORD_RE = re.compile(r'(?<![A-Za-z])(' + _WORDS + r')[\s-]+bed(?:room)?s?(?![A-Za-z])', re.I)
+    # "2 1/2 bathrooms" -> 2.5
+    BATH_HALF_RE = re.compile(r'(?<![\d./])(\d+)\s+1/2[\s-]*bath', re.I)
+    # "2 baths", "2.5-bathroom", "2 full baths"; blocks fractions like "1/2 bath", "3/4 bath"
+    BATH_NUM_RE = re.compile(
+        r'(?<![\d.])(?<!\d/)(\d+(?:\.\d+)?)\s*-?\s*(?:full\s+)?bath(?:room)?s?(?![A-Za-z])', re.I)
+    # "three full bathrooms", "one bath", "two-bathroom"
+    BATH_WORD_RE = re.compile(
+        r'(?<![A-Za-z])(' + _WORDS + r')[\s-]+(?:full[\s-]+)?bath(?:room)?s?(?![A-Za-z])', re.I)
+
     def extract_bedrooms(self, text):
         patterns = [
             # Allows "3 bedroom", "3-bedroom", "4- bedroom"; blocks "4/5 bedroom"
@@ -19,12 +33,20 @@ class EntityExtractor:
             match = re.search(pattern, text, re.I)
             if match:
                 return int(match.group(1))
-        return None
+        # Fall back to number words: "five bedrooms"
+        match = self.BED_WORD_RE.search(text)
+        return self.NUMBER_WORDS[match.group(1).lower()] if match else None
 
     def extract_bathrooms(self, text):
-        # Bathrooms can be fractional, e.g. "2.5 bathrooms"
-        match = re.search(r'(\d+(?:\.\d+)?)\s*-?\s*bath(?:room)?s?(?![A-Za-z])', text, re.I)
-        return float(match.group(1)) if match else None
+        # Bathrooms can be fractional, e.g. "2.5 bathrooms" or "2 1/2 bathrooms"
+        match = self.BATH_HALF_RE.search(text)
+        if match:
+            return int(match.group(1)) + 0.5
+        match = self.BATH_NUM_RE.search(text)
+        if match:
+            return float(match.group(1))
+        match = self.BATH_WORD_RE.search(text)
+        return float(self.NUMBER_WORDS[match.group(1).lower()]) if match else None
 
     # Price candidates: "$850,000", "$1.2 Million". "$" is required.
     PRICE_RE = re.compile(r'\$\s?(\d[\d,]*(?:\.\d+)?)(?:\s*(million))?', re.I)
