@@ -1,0 +1,34 @@
+Week 4 accuracy report: QueryParser on Week 1 sample queries
+
+Data: 91 queries from data/processed/sample_queries.json
+Full output: reports/week4_parse_results.txt
+
+Method
+- Manual review of every parsed result.
+- A query counts as correct if every constraint the database can express
+  (price, bedrooms, bathrooms, city, pool/fireplace/view, negation) was
+  extracted correctly and nothing extra was extracted.
+- Constraints with no matching column (HOA, seller financing, open house,
+  closing date, schools) are out of scope and not counted.
+
+Result
+- First run: about 79 of 91 correct (87%).
+- After fixes: 89 of 91 correct (98%).
+- Fixes made after reading the first run: plural "pools", county names
+  (Orange County) and state (California) wrongly read as city, decimal and
+  word prices ("1.2m", "1 million"), "pre-approved for 850k".
+
+Known gaps
+- Two queries compare two cities (Irvine vs Anaheim); only one city is kept.
+- data/schema.json was built from the 1000-listing sample, so real cities
+  such as Sacramento are flagged as "not found". It should be built from
+  the full database.
+- No amenity columns exist for solar, RV parking, gym, home office.
+
+Limitations
+- The fixes were made while looking at these same 91 queries, so 98% is
+  optimistic and not a held-out score.
+- Review was done by reading outputs, not against a separately written
+  gold file.
+- Tests: 196 pytest cases pass, including 5 SQL injection cases and
+  schema validation cases.tail -4 reports/week4_accuracy.txt
