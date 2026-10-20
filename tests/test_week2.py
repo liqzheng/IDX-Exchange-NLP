@@ -5,7 +5,7 @@ import pandas as pd
 import pytest
 
 # Make scripts/ importable from the tests folder
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts", "week2"))
 from text_cleaning import TextCleaner
 
 c = TextCleaner()

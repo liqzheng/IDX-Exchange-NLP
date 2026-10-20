@@ -1,0 +1,42 @@
+WEEK 3 ERROR ANALYSIS - Entity Extraction (regex)
+
+SETUP
+- Extractor: regex rules for bedrooms, bathrooms, price, sqft; taxonomy match for amenities.
+- Labeled data: 250 remarks, 150 dev / 100 test. Bedrooms and bathrooms labels come from MLS
+  fields (text evidence required). Price and sqft were hand-labeled (few rows only).
+- Metric: value-level precision / recall / F1. Rules were tuned on dev only.
+- Test split was evaluated once. No code was changed after seeing test results.
+
+RESULTS (F1)
+            dev    test
+bedrooms    0.99   1.00
+bathrooms   0.96   0.99
+price       1.00   n/a   (5 dev labels, no test labels)
+sqft        0.97   n/a   (11 dev labels, no test labels)
+micro       0.98   0.99
+Dev F1 progress as rules improved: 0.72 -> 0.88 -> 0.91 -> 0.98
+(fixes: "3-bedroom" hyphens, number words like "three bedroom", "2 1/2 bath", price context cues).
+
+TOP FAILURE PATTERNS (dev has 6 errors)
+1. Gold label disagrees with the text (ids 33, 118, 135) - 3 of 6 errors.
+   Id 135: text says "2.5-bathroom" but MLS says 3. Ids 33 and 118 have the right value in
+   the text ("2 1/2 bathrooms", "2-bed/1.5-bath") but the label builder missed them.
+   The extractor is right here; the labels are the problem.
+2. Lot size mistaken for home size (id 72, sqft).
+   "(approximately 96558 square feet) flat lot ... 1819 square feet home": the extractor takes
+   the first match, which is the lot. Fix: skip areas near "lot" / "acre", or prefer the one near "home".
+3. Multi-unit listings (id 32, bathrooms).
+   A triplex lists "2 bedroom/2 bath" per unit with no total, so the first unit is returned.
+   Fix: detect "unit" / "triplex" / "duplex" and return None or the sum.
+4. Abbreviation without a word boundary (id 85, bedrooms).
+   The pattern "(\d+) br" also matches the start of a longer word, e.g. "5 breathtaking".
+   Fix: require a non-letter after the abbreviation.
+5. Known gaps seen in the data but not fixed yet.
+   - Unicode fractions such as "2 1/2" written as the single characters 1/2 and 3/4
+     (5 + 5 remarks per 1,000), so "2<half> baths" is not parsed.
+   - Invisible zero-width characters (80 in 1,000 remarks) can split words; the cleaner does not remove them yet.
+
+LIMITATIONS
+- Labels for bedrooms and bathrooms are partly derived from MLS data, so scores are optimistic.
+- Price and sqft have very few labels; their scores are not reliable and are not scored on test.
+- Dev rules were tuned on dev, so dev F1 is optimistic; test F1 is the fairer number.
